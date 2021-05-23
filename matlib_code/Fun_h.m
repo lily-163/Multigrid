@@ -1,5 +1,5 @@
 function F = Fun_h(U,f,g,h)
-    %Ö»¿¼ÂÇÓÐÉÏ±ß½çÊÇµÚ¶þÀà±ß½ç£»
+    %åªè€ƒè™‘æœ‰ä¸Šè¾¹ç•Œæ˜¯ç¬¬äºŒç±»è¾¹ç•Œï¼›
     g1 = g(2:end,1);
     g2 = g(1,2:end-1);
     g3 = g(2:end,end);
@@ -10,57 +10,57 @@ function F = Fun_h(U,f,g,h)
         for j = 1:m
             t = (i-1)*m+j;
             if i == 1 
-                if j==1   %×ó¶Ëµã
+                if j==1   %å·¦ç«¯ç‚¹
                     F(t)= f_a(U(t))*(2*U(t)-U(t+1)-g1(i)) + f_b(U(t))*(2*U(t)-U(t+m)-g2(j))-(h^2)*f(t);
                     %disp(1);
                
-                elseif j>1 && j<m   %ÏÂ±ß½ç  
+                elseif j>1 && j<m   %ä¸‹è¾¹ç•Œ  
                     F(t)= f_a(U(t))*(2*U(t)-U(t-1)-U(t+1)) + f_b(U(t))*(2*U(t)-U(t+m)-g2(j))-(h^2)*f(t);
                     %disp(2);
                
-                elseif j==m  %ÓÒÏÂ¶Ëµã
+                elseif j==m  %å³ä¸‹ç«¯ç‚¹
                     F(t)= f_a(U(t))*(2*U(t)-U(t-1)-g3(i)) + f_b(U(t))*(2*U(t)-U(t+m)-g2(j))-(h^2)*f(t);
                     %disp(3);
                 end
            
             elseif i>1 && i<n
-                if j==1  %×ó±ß½ç
+                if j==1  %å·¦è¾¹ç•Œ
                     F(t)= f_a(U(t))*(2*U(t)-U(t+1)-g1(i)) + f_b(U(t))*(2*U(t)-U(t-m)-U(t+m))-(h^2)*f(t);
                     %disp(4);
                
-                elseif j>1 && j<m %ÖÐ¼äÍêÕû 
+                elseif j>1 && j<m %ä¸­é—´å®Œæ•´ 
                     F(t) = f_a(U(t))*(2*U(t)-U(t-1)-U(t+1)) + f_b(U(t))*(2*U(t)-U(t-m)-U(t+m))-(h^2)*f(t);
                     %disp(5);
               
-                elseif j==m  %ÓÒ±ß½ç
+                elseif j==m  %å³è¾¹ç•Œ
                     F(t)= f_a(U(t))*(2*U(t)-U(t-1)-g3(i)) + f_b(U(t))*(2*U(t)-U(t-m)-U(t+m))-(h^2)*f(t);
                     %disp(6);
                 end
             
-            elseif i==n %×óÉÏ¶Ëµã
+            elseif i==n %å·¦ä¸Šç«¯ç‚¹
                 if j == 1
                     if length(f_h(U(t)))==2
                         lambda0 = rand(1);
                         [u,lambda] = Lagrange(U,t,m,g1,g3,lambda0,h,1,f(t));
-                        F(t) = f_a(U(t))*(2*U(t)-U(t+1)-g1(i))+f_b(U(t))*2*(U(t)-U(t-m)-h*lambda)-(h^2)*f(t);
+                        F(t) = f_a(U(t))*(2*U(t)-U(t+1)-g1(i))+f_b(U(t))*2*(U(t)-U(t-m)+h*lambda)-(h^2)*f(t);
                     else
-                        F(t) = f_a(U(t))*(2*U(t)-U(t+1)-g1(i))+f_b(U(t))*2*(U(t)-U(t-m)-h*f_h(U(t)))-(h^2)*f(t);
+                        F(t) = f_a(U(t))*(2*U(t)-U(t+1)-g1(i))+f_b(U(t))*2*(U(t)-U(t-m)+h*f_h(U(t)))-(h^2)*f(t);
                     end
                 elseif j >1 && j<m
                     if length(f_h(U(t)))==2
                         lambda0 = rand(1);
                         [u,lambda] = Lagrange(U,t,m,g1,g3,lambda0,h,2,f(t));
-                        F(t) = f_a(U(t))*(2*U(t)-U(t+1)-U(t-1))+f_b(U(t))*2*(U(t)-U(t-m)-h*lambda)-(h^2)*f(t);
+                        F(t) = f_a(U(t))*(2*U(t)-U(t+1)-U(t-1))+f_b(U(t))*2*(U(t)-U(t-m)+h*lambda)-(h^2)*f(t);
                     else
-                        F(t) = f_a(U(t))*(2*U(t)-U(t+1)-U(t-1))+f_b(U(t))*2*(U(t)-U(t-m)-h*f_h(U(t)))-(h^2)*f(t);
+                        F(t) = f_a(U(t))*(2*U(t)-U(t+1)-U(t-1))+f_b(U(t))*2*(U(t)-U(t-m)+h*f_h(U(t)))-(h^2)*f(t);
                     end
                 elseif j == m
                     if length(f_h(U(t)))==2
                         lambda0 = rand(1);
                         [u,lambda] = Lagrange(U,t,m,g1,g3,lambda0,h,3,f(t));
-                        F(t) = f_a(U(t))*(2*U(t)-g3(i)-U(t-1))+f_b(U(t))*2*(U(t)-U(t-m)-h*lambda)-(h^2)*f(t);
+                        F(t) = f_a(U(t))*(2*U(t)-g3(i)-U(t-1))+f_b(U(t))*2*(U(t)-U(t-m)+h*lambda)-(h^2)*f(t);
                     else                       
-                        F(t) = f_a(U(t))*(2*U(t)-U(t-1)-g3(i))+f_b(U(t))*2*(U(t)-U(t-m)-h*f_h(U(t)))-(h^2)*f(t);
+                        F(t) = f_a(U(t))*(2*U(t)-U(t-1)-g3(i))+f_b(U(t))*2*(U(t)-U(t-m)+h*f_h(U(t)))-(h^2)*f(t);
                     end
                 end
             end
